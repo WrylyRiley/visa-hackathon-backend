@@ -11,45 +11,30 @@ app.get('/api/v1/healthz', (req, res) => {
 })
 
 app.post('/api/v1/invoices', (req, res) => {
-  const invoices = Invoice.find({})
-    .then(
-      invoices =>
-        invoices != undefined ? invoices : Promise.reject(response.text()),
-      error => Promise.reject(error)
-    )
-    .then(invoices => {
-      res.json({ attachments: invoicesStructure(invoices) })
+  const invoices = Vendor.find({})
+    .then(vendors => {
+      console.log('vendors list', vendors)
+      vendors != undefined ? vendors : Promise.reject(response.text()), error =>
+        Promise.reject(error)
+    })
+    .then(vendors => {
+      const cleanedVendors = invoicesStructure(vendors)
+      res.json({ attachments: cleanedVendors })
     })
 })
 
-function invoicesStructure (invoices) {
-  return invoices.map(element => {
+function invoicesStructure (vendors) {
+  console.log(vendors)
+  vendors = vendors.toObject()
+
+  const newObject = vendors.forEach(element => {
     return {
-      color: colorizer(element),
-      title: `Balance Due: ${element.toObject().balance_due}`,
-      pretext: `*${element.toObject().vendor_name}*`,
-      text: `Invoice Date: <!date^${element.toObject()
-        .invoice_date}^{date_short_pretty}|Unix Time: ${element.toObject()
-        .invoice_date}>\nDue Date: <!date^${element.toObject()
-        .due_date}^{date_short_pretty}|Unix Time: ${element.toObject()
-        .due_date}>`,
-      mrkdwn_in: ['pretext'],
-      actions: [
-        {
-          name: 'paymentBtn',
-          text: 'Approve',
-          style: 'primary',
-          type: 'button',
-          value: 'approve'
-        },
-        {
-          name: 'paymentBtn',
-          text: 'Reject',
-          style: 'danger',
-          type: 'button',
-          value: 'reject'
-        }
-      ]
+      fallback: 'Fallback transaction data',
+      author_name: element.recipientName,
+      title: element.recipientPrimaryAccountNumber,
+      text: element.invoices.forEach(element => {
+        return `Invoice ID: ${element.uuid}\nInvoice Amount: ${element.amount}\nInvoice Date: <!date^${element.invoiceDate}^{date_short_pretty}|Unix Time: ${element.invoiceDate}>\nDue Date: <!date^${element.dueDate}^{date_short_pretty}|Unix Time: ${element.dueDate}>`
+      })
     }
   })
 }

@@ -2,9 +2,8 @@ const mongoose = require('./connection')
 
 const InvoiceSchema = new mongoose.Schema({
   uuid: Number,
-  vendorID: Number,
-  dateOfPurchase: Date,
-  balanceDueDate: Date,
+  invoiceDate: Date,
+  dueDate: Date,
   amount: Number,
   open: Boolean
 })
