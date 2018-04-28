@@ -6,8 +6,7 @@ app.listen(4000, () => {
 })
 
 app.get('/api/v1/healthz', (req, res) => {
-  // just a stylistic choice
-  res.status(200).json({ 'Message from the backend devs': '...yo...' })
+  res.send('life ok mon')
 })
 
 app.get('/api/v1/invoices', (req, res) => {
