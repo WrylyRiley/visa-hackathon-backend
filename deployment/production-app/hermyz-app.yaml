@@ -17,6 +17,12 @@ spec:
       containers:
       - name: hermyz
         image: gcr.io/default-project-200117/hermyz:v1
+        readinessProbe:
+          httpGet:
+            path: /api/v1/healthz
+            port: 4000
+          initialDelaySeconds: 5
+          periodSeconds: 5
         command: ["nodemon"]
         args: ["-L", "/usr/src/bin/www"]
         ports:
