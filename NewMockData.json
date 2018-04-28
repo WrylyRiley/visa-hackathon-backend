@@ -1,0 +1,382 @@
+[
+  {
+    "acquirerCountryCode": 807,
+    "acquiringBin": 695344,
+    "amount": 6606.9,
+    "businessApplicationId": "QZ",
+    "cardAcceptor": {
+      "address": {
+        "country": "US",
+        "county": "United States",
+        "state": "CO",
+        "zipCode": 5
+      },
+      "idCode": "BNER2745MVPJ107",
+      "name": "Visa Inc. USA-Foster City",
+      "terminalId": "YRQC2034"
+    },
+    "cavv": "3547136658140269717255146945232430454565",
+    "foreignExchangeFeeTransaction": 10.78,
+    "localTransactionDateTime": "2017-06-06T18:41:14Z",
+    "retrievalReferenceNumber": "556861273905",
+    "senderCardExpiryDate": "2014-05-13",
+    "senderCurrencyCode": "USD",
+    "senderPrimaryAccountNumber": 16,
+    "surcharge": 19.86,
+    "systemsTraceAuditNumber": 6,
+    "nationalReimbursementFee": 12.76,
+    "cpsAuthorizationCharacteristicsIndicator": "H",
+    "addressVerificationData": { "street": "JBCT.st", "postalCode": 5 },
+    "invoice": {
+      "uuid": 1,
+      "vendorID": 5,
+      "vendorName": "Gilligan Ferrettino",
+      "dateOfPurchase": "1326522764",
+      "balanceDueDate": "1345558160",
+      "amountDue": 8816.04,
+      "flags": { "due": false, "paid": false, "overdue": true }
+    }
+  },
+  {
+    "acquirerCountryCode": 272,
+    "acquiringBin": 446127,
+    "amount": 3809.99,
+    "businessApplicationId": "DD",
+    "cardAcceptor": {
+      "address": {
+        "country": "US",
+        "county": "United States",
+        "state": "KY",
+        "zipCode": 5
+      },
+      "idCode": "CMMJ2343HLGA365",
+      "name": "Visa Inc. USA-Foster City",
+      "terminalId": "JSZG0669"
+    },
+    "cavv": "6954904976036006908478017315658881562573",
+    "foreignExchangeFeeTransaction": 13.82,
+    "localTransactionDateTime": "2017-09-10T23:19:58Z",
+    "retrievalReferenceNumber": "354547187080",
+    "senderCardExpiryDate": "2011-08-19",
+    "senderCurrencyCode": "USD",
+    "senderPrimaryAccountNumber": 16,
+    "surcharge": 18.55,
+    "systemsTraceAuditNumber": 6,
+    "nationalReimbursementFee": 19.56,
+    "cpsAuthorizationCharacteristicsIndicator": "J",
+    "addressVerificationData": { "street": "QVYV.st", "postalCode": 5 },
+    "invoice": {
+      "uuid": 2,
+      "vendorID": 5,
+      "vendorName": "Wandie Merritt",
+      "dateOfPurchase": "1280283232",
+      "balanceDueDate": "1286130806",
+      "amountDue": 4905.66,
+      "flags": { "due": false, "paid": false, "overdue": false }
+    }
+  },
+  {
+    "acquirerCountryCode": 487,
+    "acquiringBin": 374594,
+    "amount": 4924.27,
+    "businessApplicationId": "JR",
+    "cardAcceptor": {
+      "address": {
+        "country": "US",
+        "county": "United States",
+        "state": "TX",
+        "zipCode": 5
+      },
+      "idCode": "BAQL3770OHBX793",
+      "name": "Visa Inc. USA-Foster City",
+      "terminalId": "FVAY5442"
+    },
+    "cavv": "4782176423287448018723637496112454696814",
+    "foreignExchangeFeeTransaction": 13.5,
+    "localTransactionDateTime": "2017-08-04T08:03:28Z",
+    "retrievalReferenceNumber": "854879390024",
+    "senderCardExpiryDate": "2014-05-15",
+    "senderCurrencyCode": "USD",
+    "senderPrimaryAccountNumber": 16,
+    "surcharge": 14.78,
+    "systemsTraceAuditNumber": 6,
+    "nationalReimbursementFee": 11.53,
+    "cpsAuthorizationCharacteristicsIndicator": "K",
+    "addressVerificationData": { "street": "YECS.st", "postalCode": 5 },
+    "invoice": {
+      "uuid": 3,
+      "vendorID": 5,
+      "vendorName": "Valerie MacAlaster",
+      "dateOfPurchase": "1331266175",
+      "balanceDueDate": "1384137345",
+      "amountDue": 590.21,
+      "flags": { "due": true, "paid": true, "overdue": true }
+    }
+  },
+  {
+    "acquirerCountryCode": 274,
+    "acquiringBin": 748921,
+    "amount": 6137.44,
+    "businessApplicationId": "VZ",
+    "cardAcceptor": {
+      "address": {
+        "country": "US",
+        "county": "United States",
+        "state": "VA",
+        "zipCode": 5
+      },
+      "idCode": "HSOP8856TYQB225",
+      "name": "Visa Inc. USA-Foster City",
+      "terminalId": "GSUR2846"
+    },
+    "cavv": "6488803427501498627845552574749086941024",
+    "foreignExchangeFeeTransaction": 18.81,
+    "localTransactionDateTime": "2017-08-06T15:51:21Z",
+    "retrievalReferenceNumber": "358803024538",
+    "senderCardExpiryDate": "2017-04-10",
+    "senderCurrencyCode": "USD",
+    "senderPrimaryAccountNumber": 16,
+    "surcharge": 10.52,
+    "systemsTraceAuditNumber": 6,
+    "nationalReimbursementFee": 17.27,
+    "cpsAuthorizationCharacteristicsIndicator": "L",
+    "addressVerificationData": { "street": "IUQR.st", "postalCode": 5 },
+    "invoice": {
+      "uuid": 4,
+      "vendorID": 5,
+      "vendorName": "Symon Doumerc",
+      "dateOfPurchase": "1508178152",
+      "balanceDueDate": "1405968036",
+      "amountDue": 8194.83,
+      "flags": { "due": true, "paid": false, "overdue": true }
+    }
+  },
+  {
+    "acquirerCountryCode": 512,
+    "acquiringBin": 629243,
+    "amount": 5569.8,
+    "businessApplicationId": "NP",
+    "cardAcceptor": {
+      "address": {
+        "country": "US",
+        "county": "United States",
+        "state": "TX",
+        "zipCode": 5
+      },
+      "idCode": "OBZW2855MWRF597",
+      "name": "Visa Inc. USA-Foster City",
+      "terminalId": "DCEL8523"
+    },
+    "cavv": "5328783831581210087837777584765405055270",
+    "foreignExchangeFeeTransaction": 12.09,
+    "localTransactionDateTime": "2018-02-11T20:40:09Z",
+    "retrievalReferenceNumber": "451123919299",
+    "senderCardExpiryDate": "2017-10-17",
+    "senderCurrencyCode": "USD",
+    "senderPrimaryAccountNumber": 16,
+    "surcharge": 19.49,
+    "systemsTraceAuditNumber": 6,
+    "nationalReimbursementFee": 17.16,
+    "cpsAuthorizationCharacteristicsIndicator": "Q",
+    "addressVerificationData": { "street": "PPIW.st", "postalCode": 5 },
+    "invoice": {
+      "uuid": 5,
+      "vendorID": 5,
+      "vendorName": "Marshal Whyard",
+      "dateOfPurchase": "1482310831",
+      "balanceDueDate": "1418838001",
+      "amountDue": 9250.35,
+      "flags": { "due": true, "paid": true, "overdue": false }
+    }
+  },
+  {
+    "acquirerCountryCode": 385,
+    "acquiringBin": 436854,
+    "amount": 1490.41,
+    "businessApplicationId": "DN",
+    "cardAcceptor": {
+      "address": {
+        "country": "US",
+        "county": "United States",
+        "state": "CA",
+        "zipCode": 5
+      },
+      "idCode": "KALZ8773NIKS131",
+      "name": "Visa Inc. USA-Foster City",
+      "terminalId": "PQGA6843"
+    },
+    "cavv": "6758664427800927237625652209361610269960",
+    "foreignExchangeFeeTransaction": 13.11,
+    "localTransactionDateTime": "2018-01-31T02:16:28Z",
+    "retrievalReferenceNumber": "591210632515",
+    "senderCardExpiryDate": "2016-09-10",
+    "senderCurrencyCode": "USD",
+    "senderPrimaryAccountNumber": 16,
+    "surcharge": 18.37,
+    "systemsTraceAuditNumber": 6,
+    "nationalReimbursementFee": 16.88,
+    "cpsAuthorizationCharacteristicsIndicator": "G",
+    "addressVerificationData": { "street": "HGUI.st", "postalCode": 5 },
+    "invoice": {
+      "uuid": 6,
+      "vendorID": 5,
+      "vendorName": "Thorndike Beeck",
+      "dateOfPurchase": "1484497056",
+      "balanceDueDate": "1287793584",
+      "amountDue": 3132.67,
+      "flags": { "due": true, "paid": false, "overdue": true }
+    }
+  },
+  {
+    "acquirerCountryCode": 493,
+    "acquiringBin": 630059,
+    "amount": 2967.32,
+    "businessApplicationId": "NQ",
+    "cardAcceptor": {
+      "address": {
+        "country": "US",
+        "county": "United States",
+        "state": "CO",
+        "zipCode": 5
+      },
+      "idCode": "TFHM4159AOSA833",
+      "name": "Visa Inc. USA-Foster City",
+      "terminalId": "KMQI3026"
+    },
+    "cavv": "8973438007627624074608446396515006182561",
+    "foreignExchangeFeeTransaction": 15.7,
+    "localTransactionDateTime": "2018-02-21T21:06:06Z",
+    "retrievalReferenceNumber": "111648737401",
+    "senderCardExpiryDate": "2014-04-15",
+    "senderCurrencyCode": "USD",
+    "senderPrimaryAccountNumber": 16,
+    "surcharge": 18.41,
+    "systemsTraceAuditNumber": 6,
+    "nationalReimbursementFee": 18.61,
+    "cpsAuthorizationCharacteristicsIndicator": "O",
+    "addressVerificationData": { "street": "ORGH.st", "postalCode": 5 },
+    "invoice": {
+      "uuid": 7,
+      "vendorID": 5,
+      "vendorName": "Mala Quincee",
+      "dateOfPurchase": "1279602291",
+      "balanceDueDate": "1274888828",
+      "amountDue": 7406.56,
+      "flags": { "due": true, "paid": false, "overdue": false }
+    }
+  },
+  {
+    "acquirerCountryCode": 447,
+    "acquiringBin": 675428,
+    "amount": 4470.9,
+    "businessApplicationId": "KT",
+    "cardAcceptor": {
+      "address": {
+        "country": "US",
+        "county": "United States",
+        "state": "AZ",
+        "zipCode": 5
+      },
+      "idCode": "GQUR1761IGVM485",
+      "name": "Visa Inc. USA-Foster City",
+      "terminalId": "PESG6396"
+    },
+    "cavv": "5316109440607021940413679124995442701001",
+    "foreignExchangeFeeTransaction": 13.6,
+    "localTransactionDateTime": "2018-01-26T02:51:39Z",
+    "retrievalReferenceNumber": "552855957252",
+    "senderCardExpiryDate": "2016-12-30",
+    "senderCurrencyCode": "USD",
+    "senderPrimaryAccountNumber": 16,
+    "surcharge": 19.37,
+    "systemsTraceAuditNumber": 6,
+    "nationalReimbursementFee": 17.5,
+    "cpsAuthorizationCharacteristicsIndicator": "S",
+    "addressVerificationData": { "street": "CXXY.st", "postalCode": 5 },
+    "invoice": {
+      "uuid": 8,
+      "vendorID": 5,
+      "vendorName": "Ashien Sebastian",
+      "dateOfPurchase": "1429007131",
+      "balanceDueDate": "1422393254",
+      "amountDue": 6624.49,
+      "flags": { "due": false, "paid": false, "overdue": true }
+    }
+  },
+  {
+    "acquirerCountryCode": 585,
+    "acquiringBin": 259944,
+    "amount": 3391.82,
+    "businessApplicationId": "MM",
+    "cardAcceptor": {
+      "address": {
+        "country": "US",
+        "county": "United States",
+        "state": "NC",
+        "zipCode": 5
+      },
+      "idCode": "ZMWB4244FAKC259",
+      "name": "Visa Inc. USA-Foster City",
+      "terminalId": "XSJZ5320"
+    },
+    "cavv": "7528314921015047528919372831128645782771",
+    "foreignExchangeFeeTransaction": 17.29,
+    "localTransactionDateTime": "2017-10-02T23:30:50Z",
+    "retrievalReferenceNumber": "568385862245",
+    "senderCardExpiryDate": "2013-05-19",
+    "senderCurrencyCode": "USD",
+    "senderPrimaryAccountNumber": 16,
+    "surcharge": 14.05,
+    "systemsTraceAuditNumber": 6,
+    "nationalReimbursementFee": 10.0,
+    "cpsAuthorizationCharacteristicsIndicator": "W",
+    "addressVerificationData": { "street": "GSOW.st", "postalCode": 5 },
+    "invoice": {
+      "uuid": 9,
+      "vendorID": 5,
+      "vendorName": "Gabriel Esseby",
+      "dateOfPurchase": "1493565244",
+      "balanceDueDate": "1466861703",
+      "amountDue": 6292.47,
+      "flags": { "due": false, "paid": true, "overdue": false }
+    }
+  },
+  {
+    "acquirerCountryCode": 769,
+    "acquiringBin": 681600,
+    "amount": 8332.78,
+    "businessApplicationId": "OJ",
+    "cardAcceptor": {
+      "address": {
+        "country": "US",
+        "county": "United States",
+        "state": "TX",
+        "zipCode": 5
+      },
+      "idCode": "PDKF6125JPEH100",
+      "name": "Visa Inc. USA-Foster City",
+      "terminalId": "BLSL4971"
+    },
+    "cavv": "8180936677296645870463895040625167161779",
+    "foreignExchangeFeeTransaction": 15.13,
+    "localTransactionDateTime": "2017-10-11T09:36:39Z",
+    "retrievalReferenceNumber": "830380034531",
+    "senderCardExpiryDate": "2014-01-09",
+    "senderCurrencyCode": "USD",
+    "senderPrimaryAccountNumber": 16,
+    "surcharge": 12.69,
+    "systemsTraceAuditNumber": 6,
+    "nationalReimbursementFee": 19.49,
+    "cpsAuthorizationCharacteristicsIndicator": "L",
+    "addressVerificationData": { "street": "QVOX.st", "postalCode": 5 },
+    "invoice": {
+      "uuid": 10,
+      "vendorID": 5,
+      "vendorName": "Jaynell Pitrasso",
+      "dateOfPurchase": "1478349767",
+      "balanceDueDate": "1503780711",
+      "amountDue": 2383.27,
+      "flags": { "due": false, "paid": true, "overdue": false }
+    }
+  }
+]

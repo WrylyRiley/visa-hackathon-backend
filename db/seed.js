@@ -1,4 +1,4 @@
-const Invoice = require('./schema.js')
+const { Invoice, Vendor } = require('./schema')
 const seedData = require('./seeds.json')
 
 Invoice.remove({})
