@@ -1,20 +1,20 @@
-const mongoose =        require('./connection')
+const mongoose = require('./connection')
 
-const InvoiceSchema =   new mongoose.Schema({
-  uuid:                 Number,
-  vendorID:             Number,
-  vendorName:           String,
-  dateOfPurchase:       Date,
-  balanceDueDate:       Date,
-  amountDue:            Number,
-  
-  flags:                {
-    due:      Boolean,
-    paid:     Boolean,
-    overDue:  Boolean
+const InvoiceSchema = new mongoose.Schema({
+  uuid: Number,
+  vendorID: Number,
+  vendorName: String,
+  dateOfPurchase: Date,
+  balanceDueDate: Date,
+  amountDue: Number,
+
+  flags: {
+    due: Boolean,
+    paid: Boolean,
+    overDue: Boolean
   }
 })
 
-const GameBoard =       mongoose.model('Invoice', InvoiceSchema)
+const Invoice = mongoose.model('Invoice', InvoiceSchema)
 
-module.exports =        Invoice
+module.exports = Invoice
