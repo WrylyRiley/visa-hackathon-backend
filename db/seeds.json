@@ -8,9 +8,9 @@
   },
   {
     "uuid": 2,
-    "vendor_name": "Mirilla Van Cassel",
-    "invoice_date": "1518652800",
-    "due_date": "1523923200",
+    "vendorname": "Mirilla Van Cassel",
+    "invoicedate": "1518652800",
+    "duedate": "1523923200",
     "balance_due": "$9956.04"
   },
   {
