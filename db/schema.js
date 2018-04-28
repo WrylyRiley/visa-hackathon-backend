@@ -6,7 +6,13 @@ const InvoiceSchema =   new mongoose.Schema({
   vendorName:           String,
   dateOfPurchase:       Date,
   balanceDueDate:       Date,
-  amountDue:            Number
+  amountDue:            Number,
+  
+  flags:                {
+    due:      Boolean,
+    paid:     Boolean,
+    overDue:  Boolean
+  }
 })
 
 const GameBoard =       mongoose.model('Invoice', InvoiceSchema)
