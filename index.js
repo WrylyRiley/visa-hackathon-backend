@@ -1,4 +1,5 @@
 const app = require('express')()
+const Invoice = require('./db/schema')
 const mockData = require('./MOCK_DATA.json')
 
 app.listen(4000, () => {
@@ -14,8 +15,24 @@ app.post('/api/v1/invoices', (req, res) => {
 })
 
 app.post('/api/v1/rabbit', (req, res) => {
+  const invoices = Invoice.find({})
+    .then(
+      invoices =>
+        invoices != undefined
+          ? invoicesStructure(invoices)
+          : Promise.reject(response.text()),
+      error => Promise.reject(error)
+    )
+    .then(invoices => {
+      console.log(invoices)
+      res.json(invoices)
+    })
+    .catch(error => console.log(error))
+})
+
+function invoicesStructure (invoices) {
   let attachments = []
-  mockData.forEach(element => {
+  invoices.forEach(element => {
     attachments.push({
       color: colorizer(element.due_date),
       title: `Balance Due: ${element.balance_due}`,
@@ -40,41 +57,11 @@ app.post('/api/v1/rabbit', (req, res) => {
       ]
     })
   })
-  res.json({
+  return {
     text: 'List of all invoices',
     attachments: attachments
-  })
-})
-
-// app.post('/api/v1/rabbitAll', (req, res) => {
-//   let totalBalance = 0
-//   mockData.forEach(element => {
-//     totalBalance += parseInt(element.balance_due)
-//   })
-//   res.json({
-//     text: `Total balance due: $${totalBalance}`,
-//     attachments: [
-//       {
-//         actions: [
-//           {
-//             name: 'paymentBtn',
-//             text: 'Approve All',
-//             style: 'primary',
-//             type: 'button',
-//             value: 'approve_all'
-//           },
-//           {
-//             name: 'paymentBtn',
-//             text: 'Reject All',
-//             style: 'danger',
-//             type: 'button',
-//             value: 'reject_all'
-//           }
-//         ]
-//       }
-//     ]
-//   })
-// })
+  }
+}
 
 function colorizer (dueDate) {
   dueDate = parseInt(dueDate)
