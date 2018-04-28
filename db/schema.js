@@ -38,7 +38,7 @@ const VendorSchema = new mongoose.Schema({
     street: String,
     postalCode: String
   },
-  invoices: [Invoice]
+  invoices: [InvoiceSchema]
 })
 
 const Invoice = mongoose.model('Invoice', InvoiceSchema)

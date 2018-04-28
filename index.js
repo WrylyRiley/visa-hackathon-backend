@@ -1,5 +1,5 @@
 const app = require('express')()
-const { Invoice, Vendor } = require('./db/schema')
+const { Vendor, Invoice } = require('./db/schema')
 const mockData = require('./MOCK_DATA.json')
 
 app.listen(4000, () => {
@@ -18,33 +18,21 @@ app.post('/api/v1/invoices', (req, res) => {
       error => Promise.reject(error)
     )
     .then(invoices => {
-      res.json(invoicesStructure(invoices))
+      res.json({ attachments: invoicesStructure(invoices) })
     })
-})
-
-app.post('/api/v1/rabbit', (req, res) => {
-  const invoices = Invoice.find({})
-    .then(
-      invoices =>
-        invoices != undefined
-          ? invoicesStructure(invoices)
-          : Promise.reject(response.text()),
-      error => Promise.reject(error)
-    )
-    .then(invoices => {
-      console.log(invoices)
-    })
-    .catch(error => console.log(error))
 })
 
 function invoicesStructure (invoices) {
   return invoices.map(element => {
-    element = element.toObject()
     return {
       color: colorizer(element),
-      title: `Balance Due: ${element.balance_due}`,
-      pretext: `*${element.vendor_name}*`,
-      text: `Invoice Date: <!date^${element.invoice_date}^{date_short_pretty}|Unix Time: ${element.invoice_date}>\nDue Date: <!date^${element.due_date}^{date_short_pretty}|Unix Time: ${element.due_date}>`,
+      title: `Balance Due: ${element.toObject().balance_due}`,
+      pretext: `*${element.toObject().vendor_name}*`,
+      text: `Invoice Date: <!date^${element.toObject()
+        .invoice_date}^{date_short_pretty}|Unix Time: ${element.toObject()
+        .invoice_date}>\nDue Date: <!date^${element.toObject()
+        .due_date}^{date_short_pretty}|Unix Time: ${element.toObject()
+        .due_date}>`,
       mrkdwn_in: ['pretext'],
       actions: [
         {
