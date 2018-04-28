@@ -1,0 +1,30 @@
+{
+  "name": "visa-hackathon-backend",
+  "version": "0.1.0",
+  "description": "Backend for visa hackathon",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zbauer91/visa-hackathon-backend.git"
+  },
+  "author": "zach bauer and sandro guraspasvili",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zbauer91/visa-hackathon-backend/issues"
+  },
+  "homepage": "https://github.com/zbauer91/visa-hackathon-backend#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "dotenv": "^5.0.1",
+    "express": "^4.16.3",
+    "fetch": "^1.1.0",
+    "mongoose": "^5.0.16"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.3"
+  }
+}
