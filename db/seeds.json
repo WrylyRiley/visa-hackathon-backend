@@ -2,141 +2,36 @@
   {
     "uuid": 1,
     "vendor_name": "Daniela Ascough",
-    "invoice_date": "1520549789",
-    "due_date": "1512471655",
+    "invoice_date": "1518652800",
+    "due_date": "1522540800",
     "balance_due": "$6036.55"
   },
   {
     "uuid": 2,
     "vendor_name": "Mirilla Van Cassel",
-    "invoice_date": "1502088366",
-    "due_date": "1511876533",
+    "invoice_date": "1518652800",
+    "due_date": "1523923200",
     "balance_due": "$9956.04"
   },
   {
     "uuid": 3,
     "vendor_name": "Herman Sket",
-    "invoice_date": "1504332821",
-    "due_date": "1506214429",
+    "invoice_date": "1518652800",
+    "due_date": "1525797412",
     "balance_due": "$3365.12"
   },
   {
     "uuid": 4,
     "vendor_name": "Hillary Jentges",
-    "invoice_date": "1519027525",
-    "due_date": "1512892053",
+    "invoice_date": "1518652800",
+    "due_date": "1526774400",
     "balance_due": "$1247.95"
   },
   {
     "uuid": 5,
     "vendor_name": "Linnie Speare",
-    "invoice_date": "1507204177",
-    "due_date": "1522020142",
+    "invoice_date": "1518652800",
+    "due_date": "1527811200",
     "balance_due": "$7096.08"
-  },
-  {
-    "uuid": 6,
-    "vendor_name": "Daffi Keysel",
-    "invoice_date": "1501322411",
-    "due_date": "1530252596",
-    "balance_due": "$4006.75"
-  },
-  {
-    "uuid": 7,
-    "vendor_name": "Lizette Taphouse",
-    "invoice_date": "1526385498",
-    "due_date": "1505952769",
-    "balance_due": "$8735.16"
-  },
-  {
-    "uuid": 8,
-    "vendor_name": "Lenka Rown",
-    "invoice_date": "1525284894",
-    "due_date": "1531750595",
-    "balance_due": "$773.14"
-  },
-  {
-    "uuid": 9,
-    "vendor_name": "Doroteya Wand",
-    "invoice_date": "1498038042",
-    "due_date": "1513461356",
-    "balance_due": "$3741.17"
-  },
-  {
-    "uuid": 10,
-    "vendor_name": "Aguste Barten",
-    "invoice_date": "1497565060",
-    "due_date": "1520935847",
-    "balance_due": "$7391.07"
-  },
-  {
-    "uuid": 11,
-    "vendor_name": "Pren Abrahamsohn",
-    "invoice_date": "1526887516",
-    "due_date": "1508261812",
-    "balance_due": "$169.74"
-  },
-  {
-    "uuid": 12,
-    "vendor_name": "Alta Dewett",
-    "invoice_date": "1524134669",
-    "due_date": "1531767513",
-    "balance_due": "$8707.96"
-  },
-  {
-    "uuid": 13,
-    "vendor_name": "Nance McCord",
-    "invoice_date": "1499956291",
-    "due_date": "1504379429",
-    "balance_due": "$8397.66"
-  },
-  {
-    "uuid": 14,
-    "vendor_name": "Meyer Ivanyutin",
-    "invoice_date": "1498758778",
-    "due_date": "1504696926",
-    "balance_due": "$8875.58"
-  },
-  {
-    "uuid": 15,
-    "vendor_name": "Marion Cavy",
-    "invoice_date": "1512441053",
-    "due_date": "1507675782",
-    "balance_due": "$204.89"
-  },
-  {
-    "uuid": 16,
-    "vendor_name": "Johnny Sheryn",
-    "invoice_date": "1529965764",
-    "due_date": "1528296160",
-    "balance_due": "$5146.08"
-  },
-  {
-    "uuid": 17,
-    "vendor_name": "Mufi Ely",
-    "invoice_date": "1495395959",
-    "due_date": "1503221883",
-    "balance_due": "$4231.82"
-  },
-  {
-    "uuid": 18,
-    "vendor_name": "Lucas Tracey",
-    "invoice_date": "1522826334",
-    "due_date": "1499381538",
-    "balance_due": "$9513.21"
-  },
-  {
-    "uuid": 19,
-    "vendor_name": "Daisi Schreiner",
-    "invoice_date": "1515162417",
-    "due_date": "1516339268",
-    "balance_due": "$9690.18"
-  },
-  {
-    "uuid": 20,
-    "vendor_name": "Cletis Ellings",
-    "invoice_date": "1503693101",
-    "due_date": "1530778499",
-    "balance_due": "$9417.86"
   }
 ]
