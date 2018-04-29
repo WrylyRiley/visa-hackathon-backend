@@ -15,7 +15,10 @@ app.get('/api/v1/healthz', (req, res) => {
 })
 
 app.post('/api/v1/pay', (req, res) => {
-  console.log(req.body.text)
+  const args = (req.body.text)
+  if(args.split(' ').length != 2) {
+    res.send('Hermes needs an account number and invoice number to help ya mon')
+  }
   res.send('life ok mon')
 })
 
