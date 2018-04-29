@@ -39,7 +39,7 @@ function invoicesStructure (invoices) {
     return {
       fallback: 'Fallback transaction data',
       mrkdwn_in: ['title', 'author_name', 'text'],
-      title: `${element.recipientName}*\nType /{account}/{UUID} to initiate payment for a single invoice`,
+      title: `${element.recipientName}*\nType /{UUID} to initiate payment for a single invoice`,
       pretext: `Account Number: ${element.recipientPrimaryAccountNumber}`,
       text: element.invoices
         .map(element => {
