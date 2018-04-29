@@ -22,7 +22,8 @@ app.post('/api/v1/pay', (req, res) => {
   const vendor = args[0]
   const invoiceUUID = args[1]
   Vendor.findOne({}).then(
-    vendor => console.log(vendor))
+    vendor => constructVisaRequest(vendor))
+  .then()
 })
 
 app.post('/api/v1/invoices', (req, res) => {

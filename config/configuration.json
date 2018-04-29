@@ -1,0 +1,7 @@
+{
+  "userId": "KD06LP0PKEGCAU1PPVNQ21PAzCOTIeI7s3fRGd6K-4nGl0sLA",
+  "password": "pD02mPR2fAvx2qc1Pmqc47",
+  "cert": "/Users/colossus/Downloads/samplecode-NODE-ad1568/security/cert.pem",
+  "key": "/Users/colossus/.ssh/visaapi/key_ad1568af-90f5-4bd3-9607-0f2ae6b4830f.pem",
+  "visaUrl": "https://sandbox.api.visa.com/"
+}
