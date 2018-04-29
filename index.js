@@ -6,6 +6,11 @@ const mockData = require('./MOCK_DATA.json')
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
+const baseUri = 'visadirect/';
+const resourcePath = 'fundstransfer/v1/pushfundstransactions';
+
+
+
 app.listen(4000, () => {
   console.log('app listening on port 4000')
 })
