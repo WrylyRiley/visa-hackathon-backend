@@ -1,9 +1,9 @@
-const { Invoice, Vendor } = require('./schema')
+const { Vendor } = require('./schema')
 const seedData = require('./seeds.json')
 
-Invoice.remove({})
+Vendor.remove({})
   .then(_ => {
-    return Invoice.collection.insert(seedData)
+    return Vendor.collection.insert(seedData)
   })
   .then(_ => {
     process.exit()
