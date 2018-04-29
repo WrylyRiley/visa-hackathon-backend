@@ -19,7 +19,11 @@ app.get('/api/v1/healthz', (req, res) => {
 })
 
 app.post('/api/v1/reset', (req, res) => {
-  res.send('life needs a reset mon')
+  Vendor.findOne({}).then(vendor => {
+    vendor.invoices[0].open = true
+    vendor.save(function (err) {})
+  })
+  res.send(200)
 })
 
 app.post('/api/v1/pay', (req, res) => {
@@ -35,8 +39,9 @@ app.post('/api/v1/pay', (req, res) => {
     visaAPIClient.doMutualAuthRequest(baseUri + resourcePath, visaRequest, 'POST', {},
 			function (err, responseCode) {
 				if (!err) {
-          Vendor.find({}).then(vendor => {
-            console.log(vendor)
+          Vendor.findOne({}).then(vendor => {
+            vendor.invoices[0].open = false
+            vendor.save(function (err) {})
             const paymentMessage = paymentStructure()
             res.json({ attachments: [paymentMessage]})
           })
