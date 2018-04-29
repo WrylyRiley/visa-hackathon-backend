@@ -24,6 +24,22 @@ app.post('/api/v1/pay', (req, res) => {
   Vendor.findOne({}).then(vendor => console.log(vendor))
 })
 
+app.post('/api/v1/allInvoices', (req, res) => {
+  Vendor.find({})
+    .then(vendors => {
+      console.log(vendors)
+      if (vendors != undefined) {
+        return vendors
+      } else {
+        Promise.reject(response.text()), error => Promise.reject(error)
+      }
+    })
+    .then(vendors => {
+      const cleanedVendors = invoicesStructure(vendors)
+      res.json({ attachments: cleanedVendors })
+    })
+})
+
 app.post('/api/v1/invoices', (req, res) => {
   const args = req.body.text.split(' ')
   if (args.length != 1) {
@@ -77,14 +93,14 @@ app.post('/api/v1/invoice', (req, res) => {
 })
 
 function invoicesStructure (vendor) {
-  element = vendor.toObject()
   return {
     fallback: 'Invoice data',
     mrkdwn_in: ['title', 'author_name', 'text'],
-    title: `${element.recipientName}*\nType /{UUID} to initiate payment for a single invoice`,
-    pretext: `Account Number: ${element.recipientPrimaryAccountNumber}`,
-    text: element.invoices
+    title: `${vendor.recipientName}*\nType /{UUID} to initiate payment for a single invoice`,
+    pretext: `Account Number: ${vendor.recipientPrimaryAccountNumber}`,
+    text: vendor.invoices
       .map(element => {
+        element = vendor.toObject()
         correctEmoji = emojifier(element.dueDate)
         return `\n\n\nInvoice ID: ${element.uuid}\n*Invoice Amount: ${element.amount}*\nInvoice Date: <!date^${element.invoiceDate}^{date_short_pretty}|Unix Time: ${element.invoiceDate}>\nDue Date: <!date^${element.dueDate}^{date_short_pretty}|Unix Time: ${element.dueDate}> ${correctEmoji}`
       })
