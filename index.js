@@ -39,7 +39,11 @@ app.post('/api/v1/invoices', (req, res) => {
       ),
       error => Promise.reject(error),
     )
-    .then(vendor => console.log(vendor))
+    .then(vendor => {
+      const cleanedInvoices = invoicesStructure(vendor)
+      console.log(cleanedInvoices)
+      res.json({ attachments: cleanedInvoices })
+    })
     .catch(error => res.json({ error }))
 })
 
