@@ -18,6 +18,8 @@ services:
   # Javascript bot
   #######################################
   sbot:
+    depends_on:
+    - mongodb
     command: nodemon -L /usr/src/bin/www
     build:
       context: ./

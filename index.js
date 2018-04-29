@@ -21,7 +21,7 @@ app.post('/api/v1/pay', (req, res) => {
   }
   const vendor = args[0]
   const invoiceUUID = args[1]
-  Vendor.find({}).then(
+  Vendor.findOne({}).then(
     vendor => console.log(vendor))
 })
 
