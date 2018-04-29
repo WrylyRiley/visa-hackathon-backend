@@ -1,12 +1,21 @@
 const app = require('express')()
+const bodyParser = require('body-parser');
 const { Vendor, Invoice } = require('./db/schema')
 const mockData = require('./MOCK_DATA.json')
+
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 app.listen(4000, () => {
   console.log('app listening on port 4000')
 })
 
 app.get('/api/v1/healthz', (req, res) => {
+  res.send('life ok mon')
+})
+
+app.post('/api/v1/pay', (req, res) => {
+  console.log(req.body.text)
   res.send('life ok mon')
 })
 
@@ -27,7 +36,6 @@ app.post('/api/v1/invoices', (req, res) => {
     .then(invoices => {
       // console.log('second passed invoice list', invoices)
       const cleanedInvoices = invoicesStructure(invoices)
-      console.log(cleanedInvoices)
       res.json({ attachments: cleanedInvoices })
     })
 })
@@ -37,7 +45,7 @@ function invoicesStructure (invoices) {
   return invoices.map(element => {
     element = element.toObject()
     return {
-      fallback: 'Fallback transaction data',
+      fallback: 'Transaction data',
       mrkdwn_in: ['title', 'author_name', 'text'],
       title: `${element.recipientName}*\nType /{UUID} to initiate payment for a single invoice`,
       pretext: `Account Number: ${element.recipientPrimaryAccountNumber}`,
