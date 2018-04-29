@@ -11,47 +11,73 @@ app.get('/api/v1/healthz', (req, res) => {
 })
 
 app.post('/api/v1/invoices', (req, res) => {
-  const invoices = Vendor.find({})
-    .then(vendors => {
-      console.log('vendors list', vendors)
-      vendors != undefined ? vendors : Promise.reject(response.text()), error =>
-        Promise.reject(error)
+  Invoice.find({})
+    .then(invoices => {
+      // console.log('first passed invoice list', invoices)
+      if (invoices != undefined) {
+        // I wasn't getting implicit return to next promise
+        return invoices
+      } else {
+        Promise.reject(response.text()), error => Promise.reject(error)
+      }
+      // invoices != undefined
+      //   ? invoices
+      //   : Promise.reject(response.text()), error => Promise.reject(error)
     })
-    .then(vendors => {
-      const cleanedVendors = invoicesStructure(vendors)
-      res.json({ attachments: cleanedVendors })
+    .then(invoices => {
+      // console.log('second passed invoice list', invoices)
+      const cleanedInvoices = invoicesStructure(invoices)
+      console.log(cleanedInvoices)
+      res.json({ attachments: cleanedInvoices })
     })
 })
 
-function invoicesStructure (vendors) {
-  console.log(vendors)
-  vendors = vendors.toObject()
-
-  const newObject = vendors.forEach(element => {
+function invoicesStructure (invoices) {
+  // console.log('third passed invoice list', invoices)
+  return invoices.map(element => {
+    element = element.toObject()
     return {
       fallback: 'Fallback transaction data',
-      author_name: element.recipientName,
-      title: element.recipientPrimaryAccountNumber,
-      text: element.invoices.forEach(element => {
-        return `Invoice ID: ${element.uuid}\nInvoice Amount: ${element.amount}\nInvoice Date: <!date^${element.invoiceDate}^{date_short_pretty}|Unix Time: ${element.invoiceDate}>\nDue Date: <!date^${element.dueDate}^{date_short_pretty}|Unix Time: ${element.dueDate}>`
-      })
+      mrkdwn_in: ['title', 'author_name', 'text'],
+      title: `${element.recipientName}*\nType /{account}/{UUID} to initiate payment for a single invoice`,
+      pretext: `Account Number: ${element.recipientPrimaryAccountNumber}`,
+      text: element.invoices
+        .map(element => {
+          correctEmoji = emojifier(element.dueDate)
+          return `\n\n\nInvoice ID: ${element.uuid}\n*Invoice Amount: ${element.amount}*\nInvoice Date: <!date^${element.invoiceDate}^{date_short_pretty}|Unix Time: ${element.invoiceDate}>\nDue Date: <!date^${element.dueDate}^{date_short_pretty}|Unix Time: ${element.dueDate}> ${correctEmoji}`
+        })
+        .join(' '),
+      actions: [
+        {
+          name: 'interact',
+          text: 'Approve All',
+          type: 'button',
+          value: 'approve'
+        },
+        {
+          name: 'interact',
+          text: 'Reject All',
+          type: 'button',
+          value: 'reject'
+        }
+      ]
     }
   })
 }
 
-function colorizer (dueDate) {
+function emojifier (dueDate) {
   dueDate = parseInt(dueDate)
   const currentDate = Math.floor(Date.now() / 1000)
   const tenDays = 864000
   if (currentDate + tenDays > dueDate) {
     if (currentDate > dueDate) {
-      // color red
-      return '#b33a3a'
+      // red error
+      return '\u26D4'
     }
-    // color yellow
-    return '#ff9900'
+    // yellow warning
+    return '\u26A0'
   } else {
-    // color green
-    return '#36a64f'
+    // green check
+    return '\u2705'
   }
 }
