@@ -1,10 +1,10 @@
 const app = require('express')()
-const bodyParser = require('body-parser');
+const bodyParser = require('body-parser')
 const { Vendor, Invoice } = require('./db/schema')
 const mockData = require('./MOCK_DATA.json')
 
-app.use(bodyParser.json()); // support json encoded bodies
-app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+app.use(bodyParser.json()) // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })) // support encoded bodies
 
 app.listen(4000, () => {
   console.log('app listening on port 4000')
@@ -15,29 +15,28 @@ app.get('/api/v1/healthz', (req, res) => {
 })
 
 app.post('/api/v1/pay', (req, res) => {
-  const args = (req.body.text.split(' '))
-  if(args.length != 1) {
+  const args = req.body.text.split(' ')
+  if (args.length != 1) {
     res.send('Hermes needs an invoice number to help ya mon')
   }
   const vendor = args[0]
   const invoiceUUID = args[1]
-  Vendor.findOne({}).then(
-    vendor => console.log(vendor))
+  Vendor.findOne({}).then(vendor => console.log(vendor))
 })
 
 app.post('/api/v1/invoices', (req, res) => {
-  const args = (req.body.text.split(' '))
-  if(args.length != 1) {
+  const args = req.body.text.split(' ')
+  if (args.length != 1) {
     res.send('Hermes needs an account number to help ya mon')
   }
   const vendorAccountNumber = args[0]
   Vendor.findOne({ recipientPrimaryAccountNumber: vendorAccountNumber })
     .then(
-      vendor => (vendor != undefined
-        ? vendor
-        : Promise.reject('Someting Went Wrong Mon')
-      ),
-      error => Promise.reject(error),
+      vendor =>
+        vendor != undefined
+          ? vendor
+          : Promise.reject('Someting Went Wrong Mon'),
+      error => Promise.reject(error)
     )
     .then(vendor => {
       const cleanedInvoices = invoicesStructure(vendor)
@@ -45,6 +44,36 @@ app.post('/api/v1/invoices', (req, res) => {
       res.json({ attachments: cleanedInvoices })
     })
     .catch(error => res.json({ error }))
+})
+
+app.post('/api/v1/invoice', (req, res) => {
+  let invoiceQuery, vendorQuery, invoiceID
+  // FIrst, searched for UUID in all invoices
+  Invoice.findOne({ uuid: req.body.text })
+    .then(query => {
+      if (!query) {
+        res.send('Invalid invoice number, mon!')
+      }
+      invoiceQuery = query
+    })
+    .then(_ => {
+      // Next, searches for matching vendor record
+      Vendor.findOne({ 'invoices._id': invoiceID })
+        .then(query => {
+          vendorQuery = query
+        })
+        .then(_ => {
+          // Lastly, constructs a pretty card to send to slack
+          let attachments = singleInvoice(invoiceQuery, vendorQuery)
+          res.json({ attachments: [attachments] })
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    })
+    .catch(err => {
+      console.log(err)
+    })
 })
 
 function invoicesStructure (vendor) {
@@ -77,6 +106,42 @@ function invoicesStructure (vendor) {
   }
 }
 
+function singleInvoice (invoice, vendor) {
+  let correctEmoji = emojifier(invoice.dueDate)
+  console.log(vendor)
+  return {
+    fallback: 'Single invoice data',
+    title: `${invoice.amount}`,
+    author_name: `${vendor.recipientName}`,
+    pretext: `Account Number: ${vendor.recipientPrimaryAccountNumber}`,
+    fields: [
+      {
+        value: `Invoice Date: <!date^${invoice.invoiceDate}^{date_short_pretty}|Unix Time: ${invoice.invoiceDate}>`,
+        short: true
+      },
+      {
+        value: `Due Date: <!date^${invoice.dueDate}^{date_short_pretty}|Unix Time: ${invoice.dueDate}> ${correctEmoji}`,
+        short: true
+      }
+    ],
+    actions: [
+      {
+        name: 'interact',
+        text: 'Approve',
+        type: 'button',
+        value: 'approve',
+        style: 'primary'
+      },
+      {
+        name: 'interact',
+        text: 'Reject',
+        type: 'button',
+        value: 'reject',
+        style: 'danger'
+      }
+    ]
+  }
+}
 function emojifier (dueDate) {
   dueDate = parseInt(dueDate)
   const currentDate = Math.floor(Date.now() / 1000)

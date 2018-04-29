@@ -1,14 +1,16 @@
 const mongoose = require('./connection')
+const Schema = mongoose.Schema
 
-const InvoiceSchema = new mongoose.Schema({
+const InvoiceSchema = new Schema({
   uuid: Number,
   invoiceDate: String,
   dueDate: String,
   amount: String,
-  open: Boolean
+  open: Boolean,
+  vendor: { type: Schema.Types.ObjectId, ref: 'Vendor' }
 })
 
-const VendorSchema = new mongoose.Schema({
+const VendorSchema = new Schema({
   acquirerCountryCode: String,
   acquiringBin: String,
   businessApplicationId: String,
@@ -37,7 +39,7 @@ const VendorSchema = new mongoose.Schema({
     street: String,
     postalCode: String
   },
-  invoices: [InvoiceSchema]
+  invoices: [{ type: Schema.Types.ObjectId, ref: 'Invoice' }]
 })
 
 const Invoice = mongoose.model('Invoice', InvoiceSchema)

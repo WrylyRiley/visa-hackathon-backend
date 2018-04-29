@@ -1,0 +1,35 @@
+{ 
+  cardAcceptor: {
+  address:{
+    country: 'USA',
+    county: 'San Mateo',
+    state: 'CA',
+    zipCode: '94404'
+  },
+  idCode: 'CA-IDCode-77765',
+  name: 'Visa Inc. USA-Foster City',
+  terminalId: 'TID-9999' },
+ invoices: [],
+ _id: 5ae54b32b3b87488a65b4015,
+ acquirerCountryCode: '840',
+ acquiringBin: '408999',
+ businessApplicationId: 'AA',
+ merchantCategoryCode: '6012',
+ pointOfServiceData:
+  { motoECIIndicator: '0',
+    panEntryMode: '90',
+    posConditionCode: '00' },
+ recipientName: 'rohan',
+ recipientPrimaryAccountNumber: '4957030420210496',
+ retrievalReferenceNumber: '412770451018',
+ senderAccountNumber: '4653459515756154',
+ senderAddress: '901 Metro Center Blvd',
+ senderCity: 'Foster City',
+ senderCountryCode: '124',
+ senderName: 'Mohammed Qasim',
+ senderReference: '',
+ senderStateCode: 'CA',
+ sourceOfFundsCode: '05',
+ systemsTraceAuditNumber: '451018',
+ transactionCurrencyCode: 'USD',
+ transactionIdentifier: '381228649430015' }
