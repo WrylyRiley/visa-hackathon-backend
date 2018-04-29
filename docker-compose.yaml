@@ -1,0 +1,27 @@
+version: '3.5'
+services:
+  #######################################
+  # External Dependencie - NON SRC CODE
+  #######################################
+  mongodb:
+    image: mongo:latest
+    container_name: "mongodb"
+    environment:
+      - MONGO_DATA_DIR=/data/db
+      - MONGO_LOG_DIR=/dev/null
+    volumes:
+      - ./data/db:/data/db
+    ports:
+        - 27017:27017
+    command: mongod --smallfiles --logpath=/dev/null # --quiet
+  ########################################
+  # Javascript bot
+  #######################################
+  sbot:
+    command: nodemon -L /usr/src/bin/www
+    build:
+      context: ./
+    ports:
+      - "4000:4000"
+    volumes:
+    - .:/usr/src

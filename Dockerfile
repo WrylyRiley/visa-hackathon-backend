@@ -1,5 +1,5 @@
 # latest official node image
-FROM node:latest
+FROM node:alpine
 
 MAINTAINER Jonathan Foster <jxf9099@rit.edu>
 
