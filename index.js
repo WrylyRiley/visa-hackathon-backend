@@ -12,6 +12,7 @@ app.listen(4000, () => {
 
 app.get('/api/v1/healthz', (req, res) => {
   res.send('life ok mon')
+
 })
 
 app.post('/api/v1/invoices', (req, res) => {
