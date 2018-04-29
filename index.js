@@ -15,11 +15,13 @@ app.get('/api/v1/healthz', (req, res) => {
 })
 
 app.post('/api/v1/pay', (req, res) => {
-  const args = (req.body.text)
-  if(args.split(' ').length != 2) {
+  const args = (req.body.text.split(' '))
+  if(args.length != 2) {
     res.send('Hermes needs an account number and invoice number to help ya mon')
   }
-  res.send('life ok mon')
+  const vendor = args[0]
+  const invoiceUUID = args[1]
+  Invoice.find({}).then(invoice => console.log(invoice))
 })
 
 app.post('/api/v1/invoices', (req, res) => {
