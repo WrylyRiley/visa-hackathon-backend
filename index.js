@@ -16,66 +16,61 @@ app.get('/api/v1/healthz', (req, res) => {
 
 app.post('/api/v1/pay', (req, res) => {
   const args = (req.body.text.split(' '))
-  if(args.length != 2) {
-    res.send('Hermes needs an account number and invoice number to help ya mon')
+  if(args.length != 1) {
+    res.send('Hermes needs an invoice number to help ya mon')
   }
   const vendor = args[0]
   const invoiceUUID = args[1]
-  Invoice.find({}).then(invoice => console.log(invoice))
+  Vendor.find({}).then(
+    vendor => console.log(vendor))
 })
 
 app.post('/api/v1/invoices', (req, res) => {
-  Invoice.find({})
-    .then(invoices => {
-      // console.log('first passed invoice list', invoices)
-      if (invoices != undefined) {
-        // I wasn't getting implicit return to next promise
-        return invoices
-      } else {
-        Promise.reject(response.text()), error => Promise.reject(error)
-      }
-      // invoices != undefined
-      //   ? invoices
-      //   : Promise.reject(response.text()), error => Promise.reject(error)
-    })
-    .then(invoices => {
-      // console.log('second passed invoice list', invoices)
-      const cleanedInvoices = invoicesStructure(invoices)
-      res.json({ attachments: cleanedInvoices })
-    })
+  const args = (req.body.text.split(' '))
+  if(args.length != 1) {
+    res.send('Hermes needs an account number to help ya mon')
+  }
+  const vendorAccountNumber = args[0]
+  Vendor.findOne({ recipientPrimaryAccountNumber: vendorAccountNumber })
+    .then(
+      vendor => (vendor != undefined
+        ? vendor
+        : Promise.reject('Someting Went Wrong Mon')
+      ),
+      error => Promise.reject(error),
+    )
+    .then(vendor => console.log(vendor))
+    .catch(error => res.json({ error }))
 })
 
-function invoicesStructure (invoices) {
-  // console.log('third passed invoice list', invoices)
-  return invoices.map(element => {
-    element = element.toObject()
-    return {
-      fallback: 'Transaction data',
-      mrkdwn_in: ['title', 'author_name', 'text'],
-      title: `${element.recipientName}*\nType /{UUID} to initiate payment for a single invoice`,
-      pretext: `Account Number: ${element.recipientPrimaryAccountNumber}`,
-      text: element.invoices
-        .map(element => {
-          correctEmoji = emojifier(element.dueDate)
-          return `\n\n\nInvoice ID: ${element.uuid}\n*Invoice Amount: ${element.amount}*\nInvoice Date: <!date^${element.invoiceDate}^{date_short_pretty}|Unix Time: ${element.invoiceDate}>\nDue Date: <!date^${element.dueDate}^{date_short_pretty}|Unix Time: ${element.dueDate}> ${correctEmoji}`
-        })
-        .join(' '),
-      actions: [
-        {
-          name: 'interact',
-          text: 'Approve All',
-          type: 'button',
-          value: 'approve'
-        },
-        {
-          name: 'interact',
-          text: 'Reject All',
-          type: 'button',
-          value: 'reject'
-        }
-      ]
-    }
-  })
+function invoicesStructure (vendor) {
+  element = vendor.toObject()
+  return {
+    fallback: 'Invoice data',
+    mrkdwn_in: ['title', 'author_name', 'text'],
+    title: `${element.recipientName}*\nType /{UUID} to initiate payment for a single invoice`,
+    pretext: `Account Number: ${element.recipientPrimaryAccountNumber}`,
+    text: element.invoices
+      .map(element => {
+        correctEmoji = emojifier(element.dueDate)
+        return `\n\n\nInvoice ID: ${element.uuid}\n*Invoice Amount: ${element.amount}*\nInvoice Date: <!date^${element.invoiceDate}^{date_short_pretty}|Unix Time: ${element.invoiceDate}>\nDue Date: <!date^${element.dueDate}^{date_short_pretty}|Unix Time: ${element.dueDate}> ${correctEmoji}`
+      })
+      .join(' '),
+    actions: [
+      {
+        name: 'interact',
+        text: 'Approve All',
+        type: 'button',
+        value: 'approve'
+      },
+      {
+        name: 'interact',
+        text: 'Reject All',
+        type: 'button',
+        value: 'reject'
+      }
+    ]
+  }
 }
 
 function emojifier (dueDate) {
