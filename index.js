@@ -18,21 +18,28 @@ app.get('/api/v1/healthz', (req, res) => {
   res.send('life ok mon')
 })
 
+app.post('/api/v1/reset', (req, res) => {
+  res.send('life needs a reset mon')
+})
+
 app.post('/api/v1/pay', (req, res) => {
   const args = (req.body.text.split(' '))
   if(args.length != 1) {
     res.send('Hermes needs an invoice number to help ya mon')
   }
   const invoiceUUID = args[0]
-  Vendor.findOne({'invoices.uuid': invoiceUUID}).then(vendor => {
+  Vendor.findOne({}).then(vendor => {
     return constructVisaRequest(vendor, vendor.invoices[0])
   })
   .then(visaRequest =>{
     visaAPIClient.doMutualAuthRequest(baseUri + resourcePath, visaRequest, 'POST', {},
 			function (err, responseCode) {
 				if (!err) {
-          //Update Database Here
-					res.send("Payment Send My Man!")
+          Vendor.find({}).then(vendor => {
+            console.log(vendor)
+            const paymentMessage = paymentStructure()
+            res.json({ attachments: [paymentMessage]})
+          })
 				} else {
           res.send("Ooo Bad luck no payment was sent")
 				}
@@ -56,7 +63,6 @@ app.post('/api/v1/invoices', (req, res) => {
     )
     .then(vendor =>{
       const cleanedInvoices = invoicesStructure(vendor)
-      console.log(cleanedInvoices)
       res.json({ attachments: [cleanedInvoices] })
     })
     .catch(error => res.json({ error }))
@@ -67,11 +73,11 @@ function invoicesStructure (vendor) {
   return {
     fallback: 'Invoice data',
     mrkdwn_in: ['title', 'author_name', 'text'],
-    title: `${element.recipientName}*\nType /pay {UUID} to initiate payment for a single invoice`,
+    title: `${element.recipientName}\nType /pay {UUID} to initiate payment for a single invoice`,
     pretext: `Account Number: ${element.recipientPrimaryAccountNumber}`,
     text: element.invoices
       .map(element => {
-        correctEmoji = emojifier(element.dueDate)
+        correctEmoji = emojifier(element.dueDate, element.open)
         return `\n\n\nInvoice ID: ${element.uuid}\n*Invoice Amount: ${element.amount}*\nInvoice Date: <!date^${element.invoiceDate}^{date_short_pretty}|Unix Time: ${element.invoiceDate}>\nDue Date: <!date^${element.dueDate}^{date_short_pretty}|Unix Time: ${element.dueDate}> ${correctEmoji}`
       })
       .join(' '),
@@ -92,17 +98,29 @@ function invoicesStructure (vendor) {
   }
 }
 
-function emojifier (dueDate) {
+function paymentStructure() {
+  return {
+    fallback: 'Payment Complete',
+    mrkdwn_in: ['title', 'author_name', 'text'],
+    title: `Visa Payment has been completed for invoice 1231`,
+  }
+}
+
+function emojifier (dueDate, open) {
   dueDate = parseInt(dueDate)
   const currentDate = Math.floor(Date.now() / 1000)
   const tenDays = 864000
-  if (currentDate + tenDays > dueDate) {
+  console.log(open)
+  if (currentDate + tenDays > dueDate && open) {
     if (currentDate > dueDate) {
       // red error
       return '\u26D4'
     }
     // yellow warning
     return '\u26A0'
+  } else if (open) {
+    // ballot check
+    return '\u2611'
   } else {
     // green check
     return '\u2705'
