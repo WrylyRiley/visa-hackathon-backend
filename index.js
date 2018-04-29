@@ -1,10 +1,14 @@
 const app = require('express')()
 const bodyParser = require('body-parser')
+var VisaAPIClient = require('./libs/visaapiclient.js')
 const { Vendor, Invoice } = require('./db/schema')
-const mockData = require('./MOCK_DATA.json')
 
 app.use(bodyParser.json()) // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })) // support encoded bodies
+
+const baseUri = 'visadirect/'
+const resourcePath = 'fundstransfer/v1/pushfundstransactions'
+const visaAPIClient = new VisaAPIClient()
 
 app.listen(4000, () => {
   console.log('app listening on port 4000')
@@ -14,14 +18,44 @@ app.get('/api/v1/healthz', (req, res) => {
   res.send('life ok mon')
 })
 
+app.post('/api/v1/reset', (req, res) => {
+  Vendor.findOne({}).then(vendor => {
+    vendor.invoices[0].open = true
+    vendor.save(function (err) {})
+  })
+  res.send(200)
+})
+
 app.post('/api/v1/pay', (req, res) => {
   const args = req.body.text.split(' ')
   if (args.length != 1) {
     res.send('Hermes needs an invoice number to help ya mon')
   }
-  const vendor = args[0]
-  const invoiceUUID = args[1]
-  Vendor.findOne({}).then(vendor => console.log(vendor))
+  const invoiceUUID = args[0]
+  Vendor.findOne({})
+    .then(vendor => {
+      return constructVisaRequest(vendor, vendor.invoices[0])
+    })
+    .then(visaRequest => {
+      visaAPIClient.doMutualAuthRequest(
+        baseUri + resourcePath,
+        visaRequest,
+        'POST',
+        {},
+        function (err, responseCode) {
+          if (!err) {
+            Vendor.findOne({}).then(vendor => {
+              vendor.invoices[0].open = false
+              vendor.save(function (err) {})
+              const paymentMessage = paymentStructure()
+              res.json({ attachments: [paymentMessage] })
+            })
+          } else {
+            res.send('Ooo Bad luck no payment was sent')
+          }
+        }
+      )
+    })
 })
 
 app.post('/api/v1/allInvoices', (req, res) => {
@@ -46,7 +80,7 @@ app.post('/api/v1/invoices', (req, res) => {
     res.send('Hermes needs an account number to help ya mon')
   }
   const vendorAccountNumber = args[0]
-  Vendor.findOne({ recipientPrimaryAccountNumber: vendorAccountNumber })
+  Vendor.findOne({})
     .then(
       vendor =>
         vendor != undefined
@@ -56,8 +90,7 @@ app.post('/api/v1/invoices', (req, res) => {
     )
     .then(vendor => {
       const cleanedInvoices = invoicesStructure(vendor)
-      console.log(cleanedInvoices)
-      res.json({ attachments: cleanedInvoices })
+      res.json({ attachments: [cleanedInvoices] })
     })
     .catch(error => res.json({ error }))
 })
@@ -96,12 +129,11 @@ function invoicesStructure (vendor) {
   return {
     fallback: 'Invoice data',
     mrkdwn_in: ['title', 'author_name', 'text'],
-    title: `${vendor.recipientName}*\nType /{UUID} to initiate payment for a single invoice`,
-    pretext: `Account Number: ${vendor.recipientPrimaryAccountNumber}`,
-    text: vendor.invoices
+    title: `${element.recipientName}\nType /pay {UUID} to initiate payment for a single invoice`,
+    pretext: `Account Number: ${element.recipientPrimaryAccountNumber}`,
+    text: element.invoices
       .map(element => {
-        element = vendor.toObject()
-        correctEmoji = emojifier(element.dueDate)
+        correctEmoji = emojifier(element.dueDate, element.open)
         return `\n\n\nInvoice ID: ${element.uuid}\n*Invoice Amount: ${element.amount}*\nInvoice Date: <!date^${element.invoiceDate}^{date_short_pretty}|Unix Time: ${element.invoiceDate}>\nDue Date: <!date^${element.dueDate}^{date_short_pretty}|Unix Time: ${element.dueDate}> ${correctEmoji}`
       })
       .join(' '),
@@ -158,19 +190,73 @@ function singleInvoice (invoice, vendor) {
     ]
   }
 }
-function emojifier (dueDate) {
+
+function paymentStructure () {
+  return {
+    fallback: 'Payment Complete',
+    mrkdwn_in: ['title', 'author_name', 'text'],
+    title: `Visa Payment has been completed for invoice 1231`
+  }
+}
+
+function emojifier (dueDate, open) {
   dueDate = parseInt(dueDate)
   const currentDate = Math.floor(Date.now() / 1000)
   const tenDays = 864000
-  if (currentDate + tenDays > dueDate) {
+  console.log(open)
+  if (currentDate + tenDays > dueDate && open) {
     if (currentDate > dueDate) {
       // red error
       return '\u26D4'
     }
     // yellow warning
     return '\u26A0'
+  } else if (open) {
+    // ballot check
+    return '\u2611'
   } else {
     // green check
     return '\u2705'
   }
+}
+
+function constructVisaRequest (vendor, invoice) {
+  return JSON.stringify({
+    acquirerCountryCode: '840',
+    acquiringBin: '408999',
+    amount: '124.05',
+    businessApplicationId: 'AA',
+    cardAcceptor: {
+      address: {
+        country: 'USA',
+        county: 'San Mateo',
+        state: 'CA',
+        zipCode: '94404'
+      },
+      idCode: 'CA-IDCode-77765',
+      name: 'Visa Inc. USA-Foster City',
+      terminalId: 'TID-9999'
+    },
+    localTransactionDateTime: '2018-04-28T15:06:40',
+    merchantCategoryCode: '6012',
+    pointOfServiceData: {
+      motoECIIndicator: '0',
+      panEntryMode: '90',
+      posConditionCode: '00'
+    },
+    recipientName: 'rohan',
+    recipientPrimaryAccountNumber: '4957030420210496',
+    retrievalReferenceNumber: '412770451018',
+    senderAccountNumber: '4653459515756154',
+    senderAddress: '901 Metro Center Blvd',
+    senderCity: 'Foster City',
+    senderCountryCode: '124',
+    senderName: 'Mohammed Qasim',
+    senderReference: '',
+    senderStateCode: 'CA',
+    sourceOfFundsCode: '05',
+    systemsTraceAuditNumber: '451018',
+    transactionCurrencyCode: 'USD',
+    transactionIdentifier: '381228649430015'
+  })
 }
