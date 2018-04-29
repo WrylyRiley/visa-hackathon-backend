@@ -31,7 +31,7 @@ app.post('/api/v1/invoices', (req, res) => {
     res.send('Hermes needs an account number to help ya mon')
   }
   const vendorAccountNumber = args[0]
-  Vendor.findOne({ recipientPrimaryAccountNumber: vendorAccountNumber })
+  Vendor.findOne({})
     .then(
       vendor => (vendor != undefined
         ? vendor
@@ -42,7 +42,7 @@ app.post('/api/v1/invoices', (req, res) => {
     .then(vendor => {
       const cleanedInvoices = invoicesStructure(vendor)
       console.log(cleanedInvoices)
-      res.json({ attachments: cleanedInvoices })
+      res.json({ attachments: [cleanedInvoices] })
     })
     .catch(error => res.json({ error }))
 })
@@ -52,7 +52,7 @@ function invoicesStructure (vendor) {
   return {
     fallback: 'Invoice data',
     mrkdwn_in: ['title', 'author_name', 'text'],
-    title: `${element.recipientName}*\nType /{UUID} to initiate payment for a single invoice`,
+    title: `${element.recipientName}*\nType /pay {UUID} to initiate payment for a single invoice`,
     pretext: `Account Number: ${element.recipientPrimaryAccountNumber}`,
     text: element.invoices
       .map(element => {
