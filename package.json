@@ -22,7 +22,9 @@
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
     "fetch": "^1.1.0",
-    "mongoose": "^5.0.16"
+    "mongoose": "^5.0.16",
+    "randomstring": "^1.1.5",
+    "request": "^2.85.0"
   },
   "devDependencies": {
     "nodemon": "^1.17.3"

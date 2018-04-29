@@ -20,6 +20,25 @@ function logResponseBody(response, body) {
 	console.log("Body: "+ JSON.stringify(JSON.parse(body),null,4));
 }
 
+function getBasicAuthHeader(userId, password) {
+	return 'Basic ' + new Buffer(userId + ':' + password).toString('base64');
+}
+
+function VisaAPIClient() {
+
+}
+
+function getXPayToken(resourcePath , queryParams , postBody) {
+	var timestamp = Math.floor(Date.now() / 1000);
+	var sharedSecret = config.sharedSecret;
+	var preHashString = timestamp + resourcePath + queryParams + postBody;
+	var hashString = crypto.createHmac('SHA256', sharedSecret).update(preHashString).digest('hex');
+	var preHashString2 = resourcePath + queryParams + postBody;
+	var hashString2 = crypto.createHmac('SHA256', sharedSecret).update(preHashString2).digest('hex');
+	var xPayToken = 'xv2:' + timestamp + ':' + hashString;
+	return xPayToken;
+}
+
 VisaAPIClient.prototype.doMutualAuthRequest = function(path, requestBody, methodType, headers, callback) {
 	const userId = config.userId ;
 	const password = config.password;
@@ -52,3 +71,5 @@ VisaAPIClient.prototype.doMutualAuthRequest = function(path, requestBody, method
 		}
 	});
 };
+
+module.exports = VisaAPIClient;

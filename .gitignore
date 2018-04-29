@@ -2,4 +2,5 @@ node_modules/*
 keys/*
 /.env
 data
+secure
 configuration
